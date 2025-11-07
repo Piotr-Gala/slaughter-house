@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "via.pro3.slaughterhouse.generated";
+option java_outer_classname = "SlaughterhouseProto";
+
+service TraceService {
+
+  // Zwraca numery rejestracyjne wszystkich zwierząt użytych w produkcie
+  rpc GetAnimalsByProduct (GetAnimalsByProductRequest) returns (GetAnimalsByProductResponse);
+
+  // Zwraca ID wszystkich produktów, w których brały udział części od danego zwierzęcia
+  rpc GetProductsByAnimal (GetProductsByAnimalRequest) returns (GetProductsByAnimalResponse);
+}
+
+message GetAnimalsByProductRequest {
+  string product_id = 1; // UUID jako string
+}
+
+message GetAnimalsByProductResponse {
+  repeated string animal_registration_numbers = 1;
+}
+
+message GetProductsByAnimalRequest {
+  string animal_registration_number = 1;
+}
+
+message GetProductsByAnimalResponse {
+  repeated string product_ids = 1; // UUID-y jako stringi
+}
+message Empty {}
+
+service PackagingService {
+  rpc CreateSameTypeProduct (PartIds) returns (ProductId);
+  rpc CreateHalfAnimalProduct (PartIds) returns (ProductId);
+  rpc GetHalfAnimalRequiredTypes (Empty) returns (Types);
+}
+
+message PartIds { repeated string part_id = 1; }  // UUID-y części
+message ProductId { string id = 1; }              // UUID produktu
+message Types { repeated string type = 1; }
