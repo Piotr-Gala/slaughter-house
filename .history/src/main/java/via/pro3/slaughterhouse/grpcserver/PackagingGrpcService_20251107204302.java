@@ -9,6 +9,7 @@ import via.pro3.slaughterhouse.generated.*;
 import via.pro3.slaughterhouse.generated.Empty;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @GrpcService
@@ -23,8 +24,8 @@ public class PackagingGrpcService extends PackagingServiceGrpc.PackagingServiceI
     @Override
     public void createSameTypeProduct(PartIds req, StreamObserver<ProductId> out) {
         try {
-            List<Long> ids = req.getPartIdList().stream()
-                    .map(Long::valueOf)
+            List<UUID> ids = req.getPartIdList().stream()
+                    .map(UUID::fromString)
                     .collect(Collectors.toList());
             var p = packaging.createSameTypeProduct(ids);
             out.onNext(ProductId.newBuilder().setId(p.getId().toString()).build());
@@ -41,8 +42,8 @@ public class PackagingGrpcService extends PackagingServiceGrpc.PackagingServiceI
     @Override
     public void createHalfAnimalProduct(PartIds req, StreamObserver<ProductId> out) {
         try {
-            List<Long> ids = req.getPartIdList().stream()
-                    .map(Long::valueOf)
+            List<UUID> ids = req.getPartIdList().stream()
+                    .map(UUID::fromString)
                     .collect(Collectors.toList());
             var p = packaging.createHalfAnimalProduct(ids);
             out.onNext(ProductId.newBuilder().setId(p.getId().toString()).build());

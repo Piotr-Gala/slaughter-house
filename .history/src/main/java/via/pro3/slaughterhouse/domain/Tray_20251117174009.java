@@ -1,13 +1,14 @@
 package via.pro3.slaughterhouse.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 import java.util.*;
 
 // Tray entity representing a tray used to hold parts in station 2
 @Entity
 public class Tray {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @UuidGenerator
+    private UUID id;
 
     @Column(nullable=false)
     private String type; // e.g. leg, rib
@@ -18,10 +19,10 @@ public class Tray {
     @OneToMany(mappedBy = "tray")
     private List<Part> parts = new ArrayList<>();
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public String getType() {

@@ -1,14 +1,16 @@
 package via.pro3.slaughterhouse.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 // Animal entity representing an animal brought to the slaughterhouse (station 1)
 @Entity
 public class Animal {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @UuidGenerator
+    private UUID id;
 
     @Column(nullable=false, unique=true)
     private String registrationNumber;
@@ -20,10 +22,10 @@ public class Animal {
 
     private String origin; // e.g. farm name
 
-    public  Long getId() {
+    public  UUID getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public String getRegistrationNumber() {

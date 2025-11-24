@@ -1,9 +1,3 @@
--- DROP TABLE IF EXISTS product_part CASCADE;
--- DROP TABLE IF EXISTS product CASCADE;
--- DROP TABLE IF EXISTS part CASCADE;
--- DROP TABLE IF EXISTS tray CASCADE;
--- DROP TABLE IF EXISTS animal CASCADE;
-
 -- ANIMALS: rejestracja + waga na recepcji
 create table if not exists animal (
                                       id bigserial primary key,

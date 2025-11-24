@@ -1,13 +1,12 @@
-package via.pro3.slaughterhouse.repo;
+package via.pro3.slaughterhouse.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import via.pro3.slaughterhouse.domain.Product;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface TraceRepository extends JpaRepository<Product, UUID> {
+public interface TraceRepository extends JpaRepository<Product, Long> {
 
     // 1) rejestracje zwierząt użytych w produkcie
     @Query("""
@@ -17,7 +16,7 @@ public interface TraceRepository extends JpaRepository<Product, UUID> {
       join prt.animal a
       where p.id = :productId
       """)
-    List<String> findAnimalRegistrationNumbersByProductId(UUID productId);
+    List<String> findAnimalRegistrationNumbersByProductId(Long productId);
 
     // 2) produkty dla zwierzęcia (po registrationNumber)
     @Query("""
@@ -27,5 +26,5 @@ public interface TraceRepository extends JpaRepository<Product, UUID> {
       join prt.animal a
       where a.registrationNumber = :reg
       """)
-    List<UUID> findProductIdsByAnimalRegistrationNumber(String reg);
+    List<Long> findProductIdsByAnimalRegistrationNumber(String reg);
 }

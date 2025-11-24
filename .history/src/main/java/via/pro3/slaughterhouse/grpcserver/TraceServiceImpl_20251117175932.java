@@ -10,6 +10,7 @@ import via.pro3.slaughterhouse.generated.TraceServiceGrpc;
 import via.pro3.slaughterhouse.repository.TraceRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @GrpcService
 public class TraceServiceImpl extends TraceServiceGrpc.TraceServiceImplBase {
@@ -23,7 +24,7 @@ public class TraceServiceImpl extends TraceServiceGrpc.TraceServiceImplBase {
     @Override
     public void getAnimalsByProduct(GetAnimalsByProductRequest req,
                                     StreamObserver<GetAnimalsByProductResponse> out) {
-        Long productId = Long.valueOf(req.getProductId());
+        UUID productId = UUID.fromString(req.getProductId());
         List<String> regs = repo.findAnimalRegistrationNumbersByProductId(productId);
 
         GetAnimalsByProductResponse resp = GetAnimalsByProductResponse.newBuilder()
@@ -41,7 +42,7 @@ public class TraceServiceImpl extends TraceServiceGrpc.TraceServiceImplBase {
         // repo zwraca List<UUID>:
         List<String> ids = repo.findProductIdsByAnimalRegistrationNumber(req.getAnimalRegistrationNumber())
                 .stream()
-                .map(String::valueOf)
+                .map(UUID::toString)
                 .toList(); // jeśli kompilator marudzi, użyj .collect(Collectors.toList())
 
         GetProductsByAnimalResponse resp = GetProductsByAnimalResponse.newBuilder()

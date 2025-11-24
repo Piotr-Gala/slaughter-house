@@ -1,6 +1,7 @@
 package via.pro3.slaughterhouse.domain;
 
 import jakarta.persistence.*;
+import java.util.UUID;
 
 // Part entity representing a butchered PART of an animal (put on trays in station 2)
 @Entity

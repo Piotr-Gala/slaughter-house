@@ -1,12 +1,14 @@
 package via.pro3.slaughterhouse.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
+import java.util.UUID;
 
 // Part entity representing a butchered PART of an animal (put on trays in station 2)
 @Entity
 public class Part {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @UuidGenerator
+    private UUID id;
 
     @Column(nullable=false)
     private double weight; // kg
@@ -20,10 +22,10 @@ public class Part {
     @ManyToOne @JoinColumn(name="tray_id")
     private Tray tray;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public double getWeight() {

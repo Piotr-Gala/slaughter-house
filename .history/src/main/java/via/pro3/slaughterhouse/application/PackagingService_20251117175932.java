@@ -41,7 +41,7 @@ public class PackagingService {
     }
 
     @Transactional
-    public Product createSameTypeProduct(Collection<Long> partIds) {
+    public Product createSameTypeProduct(Collection<UUID> partIds) {
         if (partIds == null || partIds.isEmpty()) {
             throw new IllegalArgumentException("No parts provided");
         }
@@ -68,7 +68,7 @@ public class PackagingService {
     }
 
     @Transactional
-    public Product createHalfAnimalProduct(Collection<Long> partIds) {
+    public Product createHalfAnimalProduct(Collection<UUID> partIds) {
         if (partIds == null || partIds.isEmpty()) {
             throw new IllegalArgumentException("No parts provided");
         }

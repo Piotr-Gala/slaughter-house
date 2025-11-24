@@ -7,6 +7,7 @@ import via.pro3.slaughterhouse.domain.Tray;
 import via.pro3.slaughterhouse.repository.PartRepository;
 import via.pro3.slaughterhouse.repository.TrayRepository;
 
+import java.util.UUID;
 
 @Service
 public class ButcheringService {
@@ -20,7 +21,7 @@ public class ButcheringService {
     }
 
     @Transactional
-    public Part putPartOnTray(Long partId, Long trayId) {
+    public Part putPartOnTray(UUID partId, UUID trayId) {
         Part part = partRepo.findById(partId).orElseThrow();
         Tray tray = trayRepo.findById(trayId).orElseThrow();
 

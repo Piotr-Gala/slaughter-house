@@ -1,13 +1,14 @@
 package via.pro3.slaughterhouse.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 import java.util.*;
 
 // Product entity representing a final product made from one or more parts (station 3)
 @Entity
 public class Product {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @UuidGenerator
+    private UUID id;
 
     @Column(nullable=false)
     private ProductKind kind; // SAME_TYPE | HALF_ANIMAL
@@ -21,10 +22,10 @@ public class Product {
     )
     private Set<Part> parts = new HashSet<>();
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public ProductKind getKind() {
