@@ -27,38 +27,39 @@ class AnimalRegistrationControllerTest {
 
     @BeforeEach
     void setUp() {
-        // na razie nic nie czyścimy – trzymamy dane z data.sql
+        animalRepository.deleteAll(); // czyścimy bo teraz polegamy na ID
     }
 
     @Test
-    void createAnimalAndGetByRegistrationNumber() throws Exception {
+    void createAnimalAndGetById() throws Exception {
         String body = """
                 {
-                  "registrationNumber": "AN-999",
                   "weight": 600.5,
                   "arrivalDate": "2025-01-01",
                   "origin": "FarmX"
                 }
                 """;
 
-        // create
+        // CREATE
         mockMvc.perform(post("/api/animals")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body))
                 .andExpect(status().isCreated());
 
-        // get by registrationNumber
-        mockMvc.perform(get("/api/animals/AN-999"))
+        // Pobierz ID z repo
+        Long id = animalRepository.findAll().get(0).getId();
+
+        // GET by id
+        mockMvc.perform(get("/api/animals/" + id))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.registrationNumber").value("AN-999"))
-                .andExpect(jsonPath("$.origin").value("FarmX"));
+                .andExpect(jsonPath("$.weight").value(600.5))
+                .andExpect(jsonPath("$.origin").value("FarmX"))
+                .andExpect(jsonPath("$.arrivalDate").value("2025-01-01"));
     }
 
     @Test
     void getAnimalsByDate() throws Exception {
-        // przygotuj dane w repo (bez REST, szybciej)
         Animal a = new Animal();
-        a.setRegistrationNumber("AN-100");
         a.setWeight(500.0);
         a.setArrivalDate(java.time.LocalDate.of(2025, 1, 1));
         a.setOrigin("FarmY");
@@ -67,13 +68,14 @@ class AnimalRegistrationControllerTest {
         mockMvc.perform(get("/api/animals")
                         .param("date", "2025-01-01"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].registrationNumber").value("AN-100"));
+                .andExpect(jsonPath("$[0].origin").value("FarmY"))
+                .andExpect(jsonPath("$[0].arrivalDate").value("2025-01-01"));
     }
 
     @Test
     void invalidDateFormatReturnsBadRequest() throws Exception {
         mockMvc.perform(get("/api/animals")
-                        .param("date", "01-01-2025"))  // zły format
+                        .param("date", "01-01-2025"))
                 .andExpect(status().isBadRequest());
     }
 }

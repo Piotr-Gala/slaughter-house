@@ -14,19 +14,19 @@ service TraceService {
 }
 
 message GetAnimalsByProductRequest {
-  string product_id = 1; // UUID jako string
+  string product_id = 1;
 }
 
 message GetAnimalsByProductResponse {
-  repeated string animal_registration_numbers = 1;
+  repeated string animal_ids = 1;
 }
 
 message GetProductsByAnimalRequest {
-  string animal_registration_number = 1;
+  string animal_id = 1;
 }
 
 message GetProductsByAnimalResponse {
-  repeated string product_ids = 1; // UUID-y jako stringi
+  repeated string product_ids = 1;
 }
 message Empty {}
 

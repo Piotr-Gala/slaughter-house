@@ -10,21 +10,22 @@ public interface TraceRepository extends JpaRepository<Product, Long> {
 
     // 1) rejestracje zwierząt użytych w produkcie
     @Query("""
-      select distinct a.registrationNumber
+      select distinct a.id
       from Product p
       join p.parts prt
       join prt.animal a
       where p.id = :productId
       """)
-    List<String> findAnimalRegistrationNumbersByProductId(Long productId);
+    List<String> findAnimalIdByProductId(Long productId);
 
-    // 2) produkty dla zwierzęcia (po registrationNumber)
+    // 2) produkty dla zwierzęcia (po id)
     @Query("""
       select distinct p.id
       from Product p
       join p.parts prt
       join prt.animal a
-      where a.registrationNumber = :reg
+      where a.id = :animalId
       """)
-    List<Long> findProductIdsByAnimalRegistrationNumber(String reg);
+    List<Long> findProductIdsByAnimalId(String animalId);
+
 }

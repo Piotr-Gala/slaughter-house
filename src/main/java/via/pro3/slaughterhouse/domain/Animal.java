@@ -10,9 +10,6 @@ public class Animal {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false, unique=true)
-    private String registrationNumber;
-
     @Column(nullable=false)
     private double weight; // kg
 
@@ -25,12 +22,6 @@ public class Animal {
     }
     public void setId(Long id) {
         this.id = id;
-    }
-    public String getRegistrationNumber() {
-        return registrationNumber;
-    }
-    public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
     }
     public double getWeight() {
         return weight;

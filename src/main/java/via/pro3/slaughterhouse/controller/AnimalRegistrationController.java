@@ -38,16 +38,14 @@ public class AnimalRegistrationController {
 
 
 
-    // READ: by registration number
-    @GetMapping("/{registrationNumber}")
-    public ResponseEntity<AnimalDto> byRegistration(@PathVariable String registrationNumber) {
-        return animalRegistrationService.findByRegistrationNumber(registrationNumber)
+    // READ: by id
+    @GetMapping("/{id}")
+    public ResponseEntity<AnimalDto> byId(@PathVariable Long id) {
+        return animalRegistrationService.findById(id)
                 .map(AnimalDto::from)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
-
 
     @GetMapping
     public List<AnimalDto> getByDateOrOrigin(
@@ -59,26 +57,5 @@ public class AnimalRegistrationController {
                 .map(AnimalDto::from)
                 .toList();
     }
-
-
-
-    // READ: by date OR origin (jeden parametr naraz)
-//    @GetMapping
-//    public ResponseEntity<List<AnimalDto>> query(@RequestParam(required = false) String date,
-//                                                 @RequestParam(required = false) String origin) {
-//        if ((date == null && origin == null) || (date != null && origin != null)) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "provide either date or origin");
-//        }
-//        if (date != null) {
-//            LocalDate d = LocalDate.parse(date);
-//            return ResponseEntity.ok(repo.findAllByArrivalDate(d).stream().map(AnimalDto::from).toList());
-//        } else {
-//            return ResponseEntity.ok(repo.findAllByOriginIgnoreCase(origin).stream().map(AnimalDto::from).toList());
-//        }
-//    }
-
-
-    
-
 
 }

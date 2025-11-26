@@ -24,10 +24,10 @@ public class TraceGrpcService extends TraceServiceGrpc.TraceServiceImplBase {
     public void getAnimalsByProduct(GetAnimalsByProductRequest req,
                                     StreamObserver<GetAnimalsByProductResponse> out) {
         Long productId = Long.valueOf(req.getProductId());
-        List<String> regs = repo.findAnimalRegistrationNumbersByProductId(productId);
+        List<String> regs = repo.findAnimalIdByProductId(productId);
 
         GetAnimalsByProductResponse resp = GetAnimalsByProductResponse.newBuilder()
-                .addAllAnimalRegistrationNumbers(regs)
+                .addAllAnimalIds(regs)
                 .build();
 
         out.onNext(resp);
@@ -39,7 +39,7 @@ public class TraceGrpcService extends TraceServiceGrpc.TraceServiceImplBase {
                                     StreamObserver<GetProductsByAnimalResponse> out) {
 
         // repo zwraca List<UUID>:
-        List<String> ids = repo.findProductIdsByAnimalRegistrationNumber(req.getAnimalRegistrationNumber())
+        List<String> ids = repo.findProductIdsByAnimalId(req.getAnimalId())
                 .stream()
                 .map(String::valueOf)
                 .toList(); // jeśli kompilator marudzi, użyj .collect(Collectors.toList())

@@ -22,16 +22,9 @@ public class AnimalRegistrationService {
     }
 
     public Animal registerAnimal(CreateAnimalDto dto) {
-        if (dto.registrationNumber == null || dto.registrationNumber.isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "registrationNumber is required");
-        }
 
-        if (repo.existsByRegistrationNumber(dto.registrationNumber)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Animal with this registrationNumber already exists");
-        }
 
         Animal animal = new Animal();
-        animal.setRegistrationNumber(dto.registrationNumber);
         animal.setWeight(dto.weight);
         animal.setOrigin(dto.origin);
 
@@ -49,8 +42,8 @@ public class AnimalRegistrationService {
         return repo.save(animal);
     }
 
-    public Optional<Animal> findByRegistrationNumber(String registrationNumber) {
-        return repo.findByRegistrationNumber(registrationNumber);
+    public Optional<Animal> findById(Long Id) {
+        return repo.findById(Id);
     }
 
     public List<Animal> findByDateOrOrigin(String date, String origin) {

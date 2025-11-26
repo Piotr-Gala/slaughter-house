@@ -10,8 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
-    Optional<Animal> findByRegistrationNumber(String registrationNumber);
+    Optional<Animal> findById(Long Id);
     List<Animal> findByArrivalDate(LocalDate arrivalDate);
     List<Animal> findByOrigin(String origin);
-    boolean existsByRegistrationNumber(String registrationNumber);
+    boolean existsById(Long Id);
 }
