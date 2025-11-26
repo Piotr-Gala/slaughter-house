@@ -1,9 +1,9 @@
-package via.pro3.slaughterhouse.api;
+package via.pro3.slaughterhouse.controller;
 
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import via.pro3.slaughterhouse.application.ButcheringService;
+import via.pro3.slaughterhouse.service.ButcheringService;
 import via.pro3.slaughterhouse.domain.Part;
 import via.pro3.slaughterhouse.domain.Tray;
 import via.pro3.slaughterhouse.repository.PartRepository;
@@ -24,11 +24,11 @@ public class ButcheringController {
 
     // CREATE TRAY
     @PostMapping("/trays")
-    public ResponseEntity<Tray> createTray(@RequestBody Tray t) { return ResponseEntity.ok(trayRepo.save(t)); }
+    public ResponseEntity<Tray> createTrayRequest(@RequestBody Tray t) { return ResponseEntity.ok(trayRepo.save(t)); }
 
     // CREATE PART (bez tacy)
     @PostMapping("/parts")
-    public ResponseEntity<Part> createPart(@RequestBody Part p) { return ResponseEntity.ok(partRepo.save(p)); }
+    public ResponseEntity<Part> createPartRequest(@RequestBody Part p) { return ResponseEntity.ok(partRepo.save(p)); }
 
     // PUT PART ON TRAY (walidacje w serwisie)
     @PostMapping("/parts/{partId}/put-on-tray/{trayId}")

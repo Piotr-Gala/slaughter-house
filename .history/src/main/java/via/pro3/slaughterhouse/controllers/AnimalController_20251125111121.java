@@ -1,10 +1,12 @@
-package via.pro3.slaughterhouse.api;
+package via.pro3.slaughterhouse.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import via.pro3.slaughterhouse.domain.Animal;
+import via.pro3.slaughterhouse.dtos.animal.AnimalDto;
+import via.pro3.slaughterhouse.dtos.animal.CreateAnimalDto;
 import via.pro3.slaughterhouse.repository.AnimalRepository;
 
 import java.time.LocalDate;
@@ -21,11 +23,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/animals")
 
-public class AnimalRegistrationController {
+public class AnimalController {
 
     private final AnimalRepository repo;
 
-    public AnimalRegistrationController(AnimalRepository repo) {
+    public AnimalController(AnimalRepository repo) {
         this.repo = repo;
     }
 
@@ -47,9 +49,8 @@ public class AnimalRegistrationController {
 
     // READ: by registration number
     @GetMapping("/{registrationNumber}")
-    public ResponseEntity<AnimalDto> byRegistration(@PathVariable String registrationNumber) {
+    public ResponseEntity<Animal> byRegistration(@PathVariable String registrationNumber) {
         return repo.findByRegistrationNumber(registrationNumber)
-                .map(AnimalDto::from)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -101,29 +102,8 @@ public class AnimalRegistrationController {
 //        }
 //    }
 
-    // DTO's (public fields, without @Valid)
-    public static class CreateAnimalDto {
-        public String registrationNumber;
-        public double weight;
-        public String arrivalDate; // ISO "yyyy-MM-dd"
-        public String origin;
-    }
 
-    public static class AnimalDto {
-        public String id;
-        public String registrationNumber;
-        public double weight;
-        public String arrivalDate;
-        public String origin;
+    
 
-        static AnimalDto from(Animal a) {
-            AnimalDto dto = new AnimalDto();
-            dto.id = a.getId().toString();
-            dto.registrationNumber = a.getRegistrationNumber();
-            dto.weight = a.getWeight();
-            dto.arrivalDate = a.getArrivalDate() == null ? null : a.getArrivalDate().toString();
-            dto.origin = a.getOrigin();
-            return dto;
-        }
-    }
+
 }

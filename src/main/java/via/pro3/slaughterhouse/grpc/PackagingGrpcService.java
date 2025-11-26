@@ -1,11 +1,13 @@
-package via.pro3.slaughterhouse.grpcserver;
+package via.pro3.slaughterhouse.grpc;
 
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.springframework.grpc.server.service.GrpcService;
-import via.pro3.slaughterhouse.application.PackagingService;
-import via.pro3.slaughterhouse.generated.*;
-
+import via.pro3.slaughterhouse.service.PackagingService;
+import via.pro3.slaughterhouse.generated.PackagingServiceGrpc;
+import via.pro3.slaughterhouse.generated.PartIds;
+import via.pro3.slaughterhouse.generated.ProductId;
+import via.pro3.slaughterhouse.generated.Types;
 import via.pro3.slaughterhouse.generated.Empty;
 
 import java.util.List;
@@ -56,14 +58,12 @@ public class PackagingGrpcService extends PackagingServiceGrpc.PackagingServiceI
         }
     }
 
-
-
     @Override
-    public void getHalfAnimalRequiredTypes(Empty request,
-                                           io.grpc.stub.StreamObserver<Types> out) {
-        var types = Types.newBuilder().addAllType(packaging.getHalfAnimalRequired()).build();
+    public void getHalfAnimalRequiredTypes(Empty request, StreamObserver<Types> out) {
+        var types = Types.newBuilder()
+                .addAllType(packaging.getHalfAnimalRequired())
+                .build();
         out.onNext(types);
         out.onCompleted();
     }
-
 }

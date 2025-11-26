@@ -1,4 +1,4 @@
-package via.pro3.slaughterhouse.api;
+package via.pro3.slaughterhouse.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

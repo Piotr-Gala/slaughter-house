@@ -21,11 +21,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/animals")
 
-public class AnimalRegistrationController {
+public class AnimalController {
 
     private final AnimalRepository repo;
 
-    public AnimalRegistrationController(AnimalRepository repo) {
+    public AnimalController(AnimalRepository repo) {
         this.repo = repo;
     }
 
@@ -87,19 +87,19 @@ public class AnimalRegistrationController {
     }
 
     // READ: by date OR origin (jeden parametr naraz)
-    @GetMapping
-    public ResponseEntity<List<AnimalDto>> query(@RequestParam(required = false) String date,
-                                                 @RequestParam(required = false) String origin) {
-        if ((date == null && origin == null) || (date != null && origin != null)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "provide either date or origin");
-        }
-        if (date != null) {
-            LocalDate d = LocalDate.parse(date);
-            return ResponseEntity.ok(repo.findAllByArrivalDate(d).stream().map(AnimalDto::from).toList());
-        } else {
-            return ResponseEntity.ok(repo.findAllByOriginIgnoreCase(origin).stream().map(AnimalDto::from).toList());
-        }
-    }
+//    @GetMapping
+//    public ResponseEntity<List<AnimalDto>> query(@RequestParam(required = false) String date,
+//                                                 @RequestParam(required = false) String origin) {
+//        if ((date == null && origin == null) || (date != null && origin != null)) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "provide either date or origin");
+//        }
+//        if (date != null) {
+//            LocalDate d = LocalDate.parse(date);
+//            return ResponseEntity.ok(repo.findAllByArrivalDate(d).stream().map(AnimalDto::from).toList());
+//        } else {
+//            return ResponseEntity.ok(repo.findAllByOriginIgnoreCase(origin).stream().map(AnimalDto::from).toList());
+//        }
+//    }
 
     // DTO's (public fields, without @Valid)
     public static class CreateAnimalDto {

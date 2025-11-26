@@ -1,4 +1,4 @@
-package via.pro3.slaughterhouse.application;
+package via.pro3.slaughterhouse.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

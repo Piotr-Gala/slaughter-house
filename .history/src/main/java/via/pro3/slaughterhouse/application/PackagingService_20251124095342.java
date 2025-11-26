@@ -1,4 +1,4 @@
-package via.pro3.slaughterhouse.application;
+package via.pro3.slaughterhouse.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

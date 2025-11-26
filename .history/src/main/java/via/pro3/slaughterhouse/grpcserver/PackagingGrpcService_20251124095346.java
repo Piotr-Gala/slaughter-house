@@ -3,7 +3,7 @@ package via.pro3.slaughterhouse.grpcserver;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.springframework.grpc.server.service.GrpcService;
-import via.pro3.slaughterhouse.application.PackagingService;
+import via.pro3.slaughterhouse.service.PackagingService;
 import via.pro3.slaughterhouse.generated.*;
 
 import via.pro3.slaughterhouse.generated.Empty;
