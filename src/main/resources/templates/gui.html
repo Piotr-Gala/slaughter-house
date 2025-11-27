@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slaughterhouse GUI</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { margin-top: 30px; }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        .section { border: 1px solid #aaa; padding: 15px; margin-top: 25px; }
+        input { margin: 5px; }
+    </style>
+</head>
+<body>
+
+<h1>Slaughterhouse GUI</h1>
+
+<!-- ------------------------------------------------------- -->
+<!-- STATION 1 – ANIMAL REGISTRATION                         -->
+<!-- ------------------------------------------------------- -->
+<div class="section">
+    <h2>Station 1 – Animal Registration</h2>
+
+    <form action="/gui/animals/add" method="post">
+        <input type="number" name="weight" placeholder="Weight (kg)" step="0.1" required>
+        <input type="date" name="arrivalDate" required>
+        <input type="text" name="origin" placeholder="Origin">
+        <button type="submit">Add Animal</button>
+    </form>
+
+    <h3>Animals</h3>
+    <table>
+        <tr><th>ID</th><th>Weight</th><th>Date</th><th>Origin</th></tr>
+        <tr th:each="a : ${animals}">
+            <td th:text="${a.id}"></td>
+            <td th:text="${a.weight}"></td>
+            <td th:text="${a.arrivalDate}"></td>
+            <td th:text="${a.origin}"></td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- ------------------------------------------------------- -->
+<!-- STATION 2 – BUTCHERING                                 -->
+<!-- ------------------------------------------------------- -->
+<div class="section">
+    <h2>Station 2 – Butchering</h2>
+
+    <h3>Create Part</h3>
+    <form action="/gui/parts/add" method="post">
+        <input type="text" name="type" placeholder="Type" required>
+        <input type="number" name="weight" placeholder="Weight" step="0.1" required>
+        <input type="number" name="animalId" placeholder="Animal ID (optional)">
+        <button type="submit">Create</button>
+    </form>
+
+    <h3>Create Tray</h3>
+    <form action="/gui/trays/add" method="post">
+        <input type="text" name="type" placeholder="Type" required>
+        <input type="number" name="maxWeight" placeholder="Max Weight" step="0.1" required>
+        <button type="submit">Create Tray</button>
+    </form>
+
+    <h3>Assign Part to Tray</h3>
+    <form action="/gui/parts/assign" method="post">
+        <input type="number" name="partId" placeholder="Part ID" required>
+        <input type="number" name="trayId" placeholder="Tray ID" required>
+        <button type="submit">Assign</button>
+    </form>
+
+    <h3>Parts</h3>
+    <table>
+        <tr><th>ID</th><th>Type</th><th>Weight</th><th>Animal</th><th>Tray</th></tr>
+        <tr th:each="p : ${parts}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.type}"></td>
+            <td th:text="${p.weight}"></td>
+            <td th:text="${p.animal != null ? p.animal.id : '-'}"></td>
+            <td th:text="${p.tray != null ? p.tray.id : '-'}"></td>
+        </tr>
+    </table>
+
+    <h3>Trays</h3>
+    <table>
+        <tr><th>ID</th><th>Type</th><th>Max Weight</th></tr>
+        <tr th:each="t : ${trays}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.type}"></td>
+            <td th:text="${t.maxWeight}"></td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- ------------------------------------------------------- -->
+<!-- STATION 3 – PACKAGING                                   -->
+<!-- ------------------------------------------------------- -->
+<div class="section">
+    <h2>Station 3 – Packaging</h2>
+
+    <h3>Create SAME_TYPE product</h3>
+    <form action="/gui/packaging/same" method="post">
+        <input type="text" name="partIds" placeholder="1,2,3" required>
+        <button type="submit">Create SAME_TYPE</button>
+    </form>
+
+    <h3>Create HALF_ANIMAL product</h3>
+    <form action="/gui/packaging/half" method="post">
+        <input type="text" name="partIds" placeholder="1,5,7,9" required>
+        <button type="submit">Create HALF_ANIMAL</button>
+    </form>
+
+    <h3>Products</h3>
+    <table>
+        <tr><th>ID</th><th>Kind</th></tr>
+        <tr th:each="p : ${products}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.kind}"></td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- ------------------------------------------------------- -->
+<!-- TRACEABILITY                                            -->
+<!-- ------------------------------------------------------- -->
+<div class="section">
+    <h2>Traceability</h2>
+
+    <h3>Animals used in product</h3>
+    <form action="/gui/trace/product" method="get">
+        <input type="number" name="id" placeholder="Product ID">
+        <button type="submit">Check</button>
+    </form>
+
+    <div th:if="${traceAnimals != null}">
+        <p><strong>Animals:</strong> <span th:text="${traceAnimals}"></span></p>
+    </div>
+
+    <h3>Products containing this animal</h3>
+    <form action="/gui/trace/animal" method="get">
+        <input type="number" name="id" placeholder="Animal ID">
+        <button type="submit">Check</button>
+    </form>
+
+    <div th:if="${traceProducts != null}">
+        <p><strong>Products:</strong> <span th:text="${traceProducts}"></span></p>
+    </div>
+
+</div>
+
+</body>
+</html>

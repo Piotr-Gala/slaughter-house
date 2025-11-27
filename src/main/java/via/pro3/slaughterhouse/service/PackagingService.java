@@ -18,23 +18,20 @@ public class PackagingService {
 
     private final ProductRepository productRepo;
     private final PartRepository partRepo;
-
-    // Możesz nadpisać w application.properties, patrz niżej.
     private final Set<String> halfAnimalRequired;
 
     public PackagingService(
             ProductRepository productRepo,
             PartRepository partRepo,
-            @Value("${packaging.halfAnimal.requiredTypes:leg,rib,loin,shoulder,belly}")
-            String requiredCsv
+            @Value("${packaging.halfAnimal.requiredTypes:leg,rib,loin,shoulder,belly}") String requiredCsv
     ) {
         this.productRepo = productRepo;
         this.partRepo = partRepo;
         this.halfAnimalRequired = Arrays.stream(requiredCsv.split(","))
-                .map(s -> s.trim().toLowerCase())
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+                .map(String::trim)
+                .collect(Collectors.toSet());
     }
+
 
     public Set<String> getHalfAnimalRequired() {
         return Collections.unmodifiableSet(halfAnimalRequired);

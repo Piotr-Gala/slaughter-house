@@ -6,9 +6,10 @@
 
 -- ANIMALS: rejestracja + waga na recepcji
 create table if not exists animal (
-                                      id bigserial primary key,
-                                      registration_number text not null unique,
-                                      weight numeric not null  -- kg; waga całego zwierzęcia
+                                      id SERIAL PRIMARY KEY,
+                                      weight INT not null , -- kg
+                                      arrival_date DATE not null,
+                                      origin VARCHAR(255)
 );
 
 -- TRAYS: każda na jeden typ części + limit wagi
@@ -32,7 +33,7 @@ create table if not exists part (
 -- PRODUCTS: paczki (sameType/halfAnimal)
 create table if not exists product (
                                        id bigserial primary key,
-                                       kind text not null            -- 'SAME_TYPE' | 'HALF_ANIMAL'
+                                       kind smallint not null            -- 'SAME_TYPE' | 'HALF_ANIMAL'
 );
 
 -- Powiązania produkt ↔ części

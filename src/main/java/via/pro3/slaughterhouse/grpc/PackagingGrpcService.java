@@ -4,7 +4,7 @@ import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.springframework.grpc.server.service.GrpcService;
 import via.pro3.slaughterhouse.service.PackagingService;
-import via.pro3.slaughterhouse.generated.PackagingServiceGrpc;
+import via.pro3.slaughterhouse.generated.PackagingServiceGrpc.PackagingServiceImplBase;
 import via.pro3.slaughterhouse.generated.PartIds;
 import via.pro3.slaughterhouse.generated.ProductId;
 import via.pro3.slaughterhouse.generated.Types;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @GrpcService
-public class PackagingGrpcService extends PackagingServiceGrpc.PackagingServiceImplBase {
+public class PackagingGrpcService extends PackagingServiceImplBase {
 
     private final PackagingService packaging;
 
